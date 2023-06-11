@@ -40,4 +40,11 @@ class ProfileController extends Controller
 
         return response()->json(['message' => 'Profile updated successfully.', 'data' => $user]);
     }
+
+    public function getProfile()
+    {
+        $user = Auth::guard('api')->user();
+        
+        return response()->json(['data' => $user]);
+    }
 }

@@ -27,8 +27,12 @@ Route::post('/login',[AuthController::class,'login']);
 
 Route::middleware('auth:api')->group(function(){
     Route::post('logout',[AuthController::class,'logout']);
-    Route::put('profile', [ProfileController::class, 'updateProfile']);
+});
 
+//PROFILE
+Route::middleware('auth:api')->group(function(){
+    Route::put('profile', [ProfileController::class, 'updateProfile']);
+    Route::get('profile', [ProfileController::class, 'getProfile']);
 });
 
 //EVENTS
