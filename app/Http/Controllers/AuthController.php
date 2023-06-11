@@ -49,7 +49,7 @@ class AuthController extends Controller
         $token=$user->createToken('auth_token')->accessToken;
 
         return response([
-            // 'data'=> $user,
+            'data'=> $user,
             'token'=>$token
         ]);
 
