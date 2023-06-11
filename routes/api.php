@@ -48,7 +48,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('comments/{id}', [CommentsController::class, 'destroy']);
 
     //TASKS
-    
+
 
     //PROJECTS
 
