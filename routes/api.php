@@ -37,7 +37,10 @@ Route::middleware('auth:api')->group(function(){
 
 //EVENTS
 Route::middleware('auth:api')->group(function () {
-    // Route::apiResource('events', 'EventsController');
     Route::post('add-event',[EventsController::class,'store']);
+    Route::get('events',[EventsController::class,'index']);
+    Route::get('event/{id}',[EventsController::class,'show']);
+    Route::put('event/{id}',[EventsController::class,'update']);
+    Route::delete('event/{id}',[EventsController::class,'destroy']);
 
 });
