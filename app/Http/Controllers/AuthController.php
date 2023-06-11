@@ -57,19 +57,19 @@ class AuthController extends Controller
         
     }
 
-    public function updateProfile(Request $request)
-    {
-        $user = $request->user();
+    // public function updateProfile(Request $request)
+    // {
+    //     $user = $request->user();
 
-        $request->validate([
-            'name' => 'required',
-        ]);
+    //     $request->validate([
+    //         'name' => 'required',
+    //     ]);
 
-        $user->name = $request->input('name');
-        $user->save();
+    //     $user->name = $request->input('name');
+    //     $user->save();
 
-        return response()->json(['message' => 'Profile updated successfully']);
-    }
+    //     return response()->json(['message' => 'Profile updated successfully']);
+    // }
     
 
     public function logout(Request $request){
@@ -77,6 +77,6 @@ class AuthController extends Controller
 
         return response([
             'message'=>'Logged out sucesfully'
-        ]);
+        ], 200);
     }
 }
