@@ -19,11 +19,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['name', 'email', 'password', 'role'];
+
 
     protected $primaryKey = 'uuid';
     public $incrementing = false;
@@ -60,6 +57,5 @@ class User extends Authenticatable
         // Add your admin validation logic here
         return $this->role === 'admin';
     }
-
 
 }

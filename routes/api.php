@@ -31,8 +31,9 @@ Route::middleware('auth:api')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     //PROFILE
-    Route::put('profile', [ProfileController::class, 'updateProfile']);
+    Route::put('profile/{id}', [ProfileController::class, 'updateProfile']);
     Route::get('profile', [ProfileController::class, 'getProfile']);
+    Route::get('users', [ProfileController::class, 'getAllUsers']);
 
     //EVENTS
     Route::post('add-event', [EventsController::class, 'store']);
