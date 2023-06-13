@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\TasksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,7 +49,11 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('comments/{id}', [CommentsController::class, 'destroy']);
 
     //TASKS
-
+    Route::post('tasks', [TasksController::class, 'store']);
+    Route::get('tasks', [TasksController::class, 'index']);
+    Route::get('tasks/{id}', [TasksController::class, 'show']);
+    Route::put('tasks/{id}', [TasksController::class, 'update']);
+    Route::delete('tasks/{id}', [TasksController::class, 'destroy']);
 
     //PROJECTS
 
