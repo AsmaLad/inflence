@@ -16,6 +16,9 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->string('comment'); 
+            $table->uuid('user_id'); 
+
+            $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

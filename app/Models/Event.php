@@ -22,4 +22,8 @@ class Event extends Model
             $model->{$model->getKeyName()} = Uuid::uuid4()->toString();
         });
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

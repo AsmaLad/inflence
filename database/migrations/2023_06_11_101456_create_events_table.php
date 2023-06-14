@@ -20,6 +20,9 @@ return new class extends Migration
             $table->dateTime('end');
             $table->uuid('contributeur_id');
             $table->uuid('client_id');
+
+            $table->foreign('contributeur_id')->references('uuid')->on('users')->onDelete('cascade');
+            $table->foreign('client_id')->references('uuid')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

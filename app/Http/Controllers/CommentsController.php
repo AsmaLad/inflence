@@ -4,20 +4,41 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
 
 class CommentsController extends Controller
 {
     public function index()
     {
-        $comments = Comment::all();
+        $comments = Comment::with('event')->get();
+
+        // $responseData = $comments->map(function ($comment) {
+        //     return [
+        //         'comment' => $comment->comment,
+        //         'event_name' => $comment->event->title,
+        //     ];
+        // });
+    
         return response()->json(['data' => $comments]);
     }
 
     public function store(Request $request)
-    {
-        $comment = Comment::create($request->all());
+{
+    $user = Auth::user();
+
+    if ($user->role === 'client') {
+        $comment = new Comment();
+        $comment->comment = $request->input('comment');
+        $comment->user_id = $user->uuid; 
+        
+        $comment->save();
+
         return response()->json(['data' => $comment], 201);
     }
+
+    return response()->json(['error' => 'Unauthorized'], 401);
+}
 
     public function show($id)
     {
