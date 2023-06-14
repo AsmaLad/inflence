@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use Illuminate\Support\Facades\Auth;
 
 class EventsController extends Controller
 {
@@ -13,10 +14,21 @@ class EventsController extends Controller
         return response()->json(['data' => $events]);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $contributeurId, $clientId)
     {
-        $event = Event::create($request->all());
-        return response()->json(['data' => $event], 201);
+        $loggedInUser = Auth::user();
+
+        if ($loggedInUser->role === 'admin') {
+            $eventData = $request->all();
+            $eventData['contributeur_id'] = $contributeurId;
+            $eventData['client_id'] = $clientId;
+    
+            $event = Event::create($eventData);
+    
+            return response()->json(['data' => $event], 201);
+        }
+        return response()->json(['message' => 'Only admin users can create events'], 403);
+
     }
 
     public function show($id)

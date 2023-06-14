@@ -38,7 +38,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('contributeurs', [ProfileController::class, 'getAllContributeurs']);
 
     //EVENTS
-    Route::post('add-event', [EventsController::class, 'store']);
+    Route::post('add-event/{contributeurId}/{clientId}', [EventsController::class, 'store']);
     Route::get('events', [EventsController::class, 'index']);
     Route::get('event/{id}', [EventsController::class, 'show']);
     Route::put('event/{id}', [EventsController::class, 'update']);

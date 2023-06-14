@@ -9,7 +9,7 @@ use Ramsey\Uuid\Uuid;
 class Event extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'date'];
+    protected $fillable = ['title', 'start', 'end'];
 
     protected $primaryKey = 'uuid';
     public $incrementing = false;
