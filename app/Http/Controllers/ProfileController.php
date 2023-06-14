@@ -45,9 +45,15 @@ class ProfileController extends Controller
 
     public function updateProfile($userId, Request $request)
     {
-        $user = User::findOrFail($userId);
-        $user->update($request->all());
-        return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+        $loggedInUser = Auth::user();
+
+        if ($loggedInUser->isAdmin('admin')) {
+            $user = User::findOrFail($userId);
+            $user->update($request->all());
+            return response()->json(['message' => 'User updated successfully', 'user' => $user]);
+        } else {
+            return response()->json(['message' => 'Only admin users can update profiles'], 403);
+        }
     }
 
     public function getProfile()
@@ -59,6 +65,18 @@ class ProfileController extends Controller
     public function getAllUsers()
     {
         $users = User::whereNull('role')->get();
-        return response()->json(['message' => 'User updated successfully', 'users' => $users]);
+        return response()->json(['message' => 'success', 'users' => $users]);
+    }
+
+    public function getAllClients()
+    {
+        $users = User::where('role', 'client')->get();
+        return response()->json(['message' => 'success', 'users' => $users]);
+    }
+
+    public function getAllContributeurs()
+    {
+        $users = User::where('role', 'contributeur')->get();
+        return response()->json(['message' => 'success', 'users' => $users]);
     }
 }

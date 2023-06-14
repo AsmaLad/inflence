@@ -52,9 +52,8 @@ class User extends Authenticatable
         });
     }
 
-    public function isAdmin()
+    public function isAdmin($role)
     {
-        // Add your admin validation logic here
         return $this->role === 'admin';
     }
 

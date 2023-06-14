@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->string('title');
-            $table->text('description');
-            $table->date('date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
