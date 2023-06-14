@@ -16,11 +16,10 @@ return new class extends Migration
         Schema::create('events', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->string('title');
-            $table->date('start');
-            $table->date('end');
+            $table->dateTime('start');
+            $table->dateTime('end');
             $table->uuid('contributeur_id');
             $table->uuid('client_id');
-
             $table->timestamps();
         });
     }
