@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->uuid('uuid')->primary();
             $table->string('name');
             $table->string('progress')->default('0');
-            $table->enum('status', ['en cours', 'inactif', 'terminer'])->default('inactif');
+            $table->enum('status', ['en cours','terminer'])->default('en cours');
             $table->uuid('user_id');
             $table->uuid('event_uuid');
 

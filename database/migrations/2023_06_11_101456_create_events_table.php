@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->string('progress')->default('0');
-            $table->enum('status', ['en cours', 'inactif', 'terminer'])->default('inactif');
+            $table->enum('status', ['en cours','terminer'])->default('en cours');
 
             $table->uuid('contributeur_id');
             $table->uuid('user_id');
