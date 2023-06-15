@@ -18,7 +18,7 @@ class AuthController extends Controller
         $user=User::create([
             'name'=>$request->name,
             'email'=>$request->email,
-            'password'=>Hash::make($request->password),
+            'password'=>\Illuminate\Support\Facades\Hash::make($request->password),
         ]);
 
         $token=$user->createToken('auth_token')->accessToken;
@@ -38,7 +38,7 @@ class AuthController extends Controller
 
         $user=User::where('email',$request->email)->first();
 
-        if(!$user|| !Hash::check($request->password,$user->password)){
+        if(!$user|| !\Illuminate\Support\Facades\Hash::check($request->password,$user->password)){
             return response([
                 'message'=>'The provided credentials are incorrect'
             ]);
@@ -52,9 +52,9 @@ class AuthController extends Controller
         ]);
 
 
-        
+
     }
-    
+
     public function logout(Request $request){
         $request->user()->token()->revoke();
 
