@@ -15,8 +15,8 @@ return new class extends Migration {
         Schema::create('tasks', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->string('name');
-            $table->string('progress')->default('0%');
-            $table->enum('status', ['en cours ', 'inactif', 'terminer'])->default('inactif');
+            $table->string('progress')->default('0');
+            $table->enum('status', ['en cours', 'inactif', 'terminer'])->default('inactif');
             $table->uuid('user_id');
             $table->uuid('event_uuid');
 

@@ -30,7 +30,6 @@ class CommentsController extends Controller
     $user = Auth::user();
     $events = $user->events[0]->uuid;
     
-    if ($user->role === 'client') {
         $comment = new Comment();
         $comment->comment = $request->input('comment');//comment
         $comment->user_id = $user->uuid; //user_id
@@ -38,11 +37,8 @@ class CommentsController extends Controller
         $comment->save();
         // $username = $user->name;
         // return response()->json(['data' => $comment, 'username' => $username], 201);  'data' => $events,
-    return response()->json(['data' => $comment], 201);
+    return response()->json(['message' => 'Comment added successfully'], 201);
 
-    }
-
-    return response()->json(['error' => 'Unauthorized'], 401);
 }
 
     public function show($id)
