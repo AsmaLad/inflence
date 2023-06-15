@@ -25,20 +25,20 @@ class CommentsController extends Controller
         return response()->json(['data' => $comments]);
     }
 
-    public function store(Request $request,$event_uuid)
+    public function store(Request $request)
 {
     $user = Auth::user();
-    // $events = $user->events;
+    $events = $user->events[0]->uuid;
     
     if ($user->role === 'client') {
         $comment = new Comment();
-        $comment->comment = $request->input('comment');
-        $comment->user_id = $user->uuid;
-        $comment->event_uuid = $event_uuid;
+        $comment->comment = $request->input('comment');//comment
+        $comment->user_id = $user->uuid; //user_id
+        $comment->event_uuid = $events;
         $comment->save();
-        $username = $user->name;
+        // $username = $user->name;
         // return response()->json(['data' => $comment, 'username' => $username], 201);  'data' => $events,
-    return response()->json(['username' => $username , 'comments' => $comment], 201);
+    return response()->json(['data' => $comment], 201);
 
     }
 

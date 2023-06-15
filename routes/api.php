@@ -46,7 +46,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('event/{id}', [EventsController::class, 'destroy']);
 
     //COMMENTS
-    Route::post('comments/{event_uuid}', [CommentsController::class, 'store']);
+    Route::post('comments', [CommentsController::class, 'store']);
     Route::get('comments', [CommentsController::class, 'index']);
     Route::get('comments/{id}', [CommentsController::class, 'show']);
     Route::put('comments/{id}', [CommentsController::class, 'update']);
