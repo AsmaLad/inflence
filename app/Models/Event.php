@@ -9,7 +9,7 @@ use Ramsey\Uuid\Uuid;
 class Event extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'start', 'end', 'contributeur_id','client_id' ];
+    protected $fillable = ['title', 'start', 'end', 'contributeur_id','user_id' ];
 
     protected $primaryKey = 'uuid';
     public $incrementing = false;
@@ -25,5 +25,10 @@ class Event extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -21,7 +21,7 @@ class EventsController extends Controller
         if ($loggedInUser->role === 'admin') {
             $eventData = $request->all();
             $eventData['contributeur_id'] = $contributeurId;
-            $eventData['client_id'] = $clientId;
+            $eventData['user_id'] = $clientId;
     
             $event = Event::create($eventData);
     

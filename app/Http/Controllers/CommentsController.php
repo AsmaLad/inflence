@@ -11,7 +11,9 @@ class CommentsController extends Controller
 {
     public function index()
     {
-        $comments = Comment::with('event')->get();
+        // $comments = Comment::with('event')->get();
+        // $event=Event::where('uuid',$request->email)->first();
+        $comments = Event::with('comments')->get();
 
         // $responseData = $comments->map(function ($comment) {
         //     return [
@@ -26,15 +28,17 @@ class CommentsController extends Controller
     public function store(Request $request)
 {
     $user = Auth::user();
+    $events = $user->events;
 
     if ($user->role === 'client') {
         $comment = new Comment();
         $comment->comment = $request->input('comment');
-        $comment->user_id = $user->uuid; 
-        
+        $comment->user_id = $user->uuid;       
         $comment->save();
+        $username = $user->name;
+        // return response()->json(['data' => $comment, 'username' => $username], 201);
+                return response()->json(['data' => $events], 201);
 
-        return response()->json(['data' => $comment], 201);
     }
 
     return response()->json(['error' => 'Unauthorized'], 401);

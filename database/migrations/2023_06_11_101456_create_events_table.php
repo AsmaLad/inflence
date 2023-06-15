@@ -19,10 +19,10 @@ return new class extends Migration
             $table->dateTime('start');
             $table->dateTime('end');
             $table->uuid('contributeur_id');
-            $table->uuid('client_id');
+            $table->uuid('user_id');
 
             $table->foreign('contributeur_id')->references('uuid')->on('users')->onDelete('cascade');
-            $table->foreign('client_id')->references('uuid')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
