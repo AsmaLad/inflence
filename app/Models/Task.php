@@ -10,7 +10,7 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'status'];
+    protected $fillable = ['name', 'progress', 'status', 'user_id', 'event_uuid'];
 
     protected $primaryKey = 'uuid';
     public $incrementing = false;
@@ -22,6 +22,10 @@ class Task extends Model
         self::creating(function (Model $model) {
             $model->{$model->getKeyName()} = Uuid::uuid4()->toString();
         });
+    }
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
     }
 
 }

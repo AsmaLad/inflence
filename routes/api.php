@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\TasksController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,7 @@ Route::middleware('auth:api')->group(function () {
     Route::put('tasks/{id}', [TasksController::class, 'update']);
     Route::delete('tasks/{id}', [TasksController::class, 'destroy']);
 
-    //PROJECTS
+    //TABLE
+    Route::get('users-events', [UserController::class, 'getUsersWithEvents']);
 
 });

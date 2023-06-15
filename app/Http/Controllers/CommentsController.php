@@ -29,6 +29,7 @@ class CommentsController extends Controller
 {
     $user = Auth::user();
     // $events = $user->events;
+    
     if ($user->role === 'client') {
         $comment = new Comment();
         $comment->comment = $request->input('comment');
