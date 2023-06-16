@@ -10,12 +10,8 @@ class FeedbackController extends Controller
     public function index()
     {
         $feedbacks = Feedback::all();
-        return view('feedbacks.index', compact('feedbacks'));
-    }
 
-    public function create()
-    {
-        return view('feedbacks.create');
+        return response()->json(['feedbacks' => $feedbacks], 201);
     }
 
     public function store(Request $request)
@@ -27,19 +23,13 @@ class FeedbackController extends Controller
 
         Feedback::create($data);
 
-        return redirect()->route('feedbacks.index')->with('success', 'Feedback created successfully.');
+        return response()->json(['message' => 'Comment added successfully'], 201);
     }
 
     public function show($id)
     {
         $feedback = Feedback::findOrFail($id);
-        return view('feedbacks.show', compact('feedback'));
-    }
-
-    public function edit($id)
-    {
-        $feedback = Feedback::findOrFail($id);
-        return view('feedbacks.edit', compact('feedback'));
+        return response()->json(['data' => $feedback]);
     }
 
     public function update(Request $request, $id)
@@ -52,7 +42,7 @@ class FeedbackController extends Controller
         $feedback = Feedback::findOrFail($id);
         $feedback->update($data);
 
-        return redirect()->route('feedbacks.index')->with('success', 'Feedback updated successfully.');
+        return response()->json(['data' => $feedback]);
     }
 
     public function destroy($id)
@@ -60,6 +50,6 @@ class FeedbackController extends Controller
         $feedback = Feedback::findOrFail($id);
         $feedback->delete();
 
-        return redirect()->route('feedbacks.index')->with('success', 'Feedback deleted successfully.');
+        return response()->json(['message' => 'Comment deleted successfully']);
     }
 }

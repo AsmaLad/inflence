@@ -21,9 +21,8 @@ class TasksController extends Controller
     {
         $user = Auth::user();
         $events = $user->events;
-        dd($user);
 
-        // if ($user->role === 'admin' || $user->role === 'contributeur') {
+        if ($user->role === 'admin' || $user->role === 'contributeur') {
 
             $mappedArray = collect($events)->map(function ($item) {
                 // Transform the object as per your requirements
@@ -43,7 +42,7 @@ class TasksController extends Controller
 
             $task->save();
 
-        // }
+        }
         // return response()->json(['message' => 'Only admin and contributeurs can add tasks events'], 403);
         return response()->json(['task' => $task], 201);
 
