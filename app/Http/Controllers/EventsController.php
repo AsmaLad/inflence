@@ -50,4 +50,11 @@ class EventsController extends Controller
         $event->delete();
         return response()->json(['message' => 'Event deleted successfully']);
     }
+
+    public function getEventsWithUsers()
+    {
+       $events=Event::all();
+
+        return response()->json(['events' => $events], 200);
+    }
 }

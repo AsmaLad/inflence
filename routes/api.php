@@ -60,7 +60,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('tasks/{id}', [TasksController::class, 'destroy']);
 
     //TABLE
-    Route::get('users-events', [UserController::class, 'getUsersWithEvents']);
+    Route::get('users-events', [EventsController::class, 'getEventsWithUsers']);
     Route::get('user/{id}', [UserController::class, 'getUserById']);
     Route::get('all-users', [UserController::class, 'getAllUsers']);
 
