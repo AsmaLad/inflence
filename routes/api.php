@@ -62,7 +62,7 @@ Route::middleware('auth:api')->group(function () {
     //TABLE
     Route::get('users-events', [UserController::class, 'getUsersWithEvents']);
     Route::get('user/{id}', [UserController::class, 'getUserById']);
-    Route::get('users', [UserController::class, 'getAllUsers']);
+    Route::get('all-users', [UserController::class, 'getAllUsers']);
 
 
 });
