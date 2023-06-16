@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class EventsController extends Controller
@@ -53,8 +54,27 @@ class EventsController extends Controller
 
     public function getEventsWithUsers()
     {
-       $events=Event::all();
+        // $events = Event::all();
+        $events = Event::select('title', 'status', 'progress')->get();
+        $contributeurIds = Event::pluck('contributeur_id')->all();
+        $clientIds = Event::pluck('user_id')->all();
+        
+        $userContributeurs = User::whereIn('uuid', $contributeurIds)->get();
+        $userClients = User::whereIn('uuid', $clientIds)->get();
+        
+        $data = $events->map(function ($event) use ($userContributeurs, $userClients) {
+            $userNameContributeur = $userContributeurs->where('contributeur_id', $event->contributeur_id)->pluck('name')->first();
+            $userNameClient = $userClients->where('user_id', $event->user_id)->pluck('name')->first();
+        
+            return [
+                'event' => $event,
+                'userNameClient' => $userNameClient,
+                'userNameContributeur' => $userNameContributeur,
+            ];
 
-        return response()->json(['events' => $events], 200);
+        });
+        return response()->json(['events' => $data], 200);
+        
+        // return response()->json(['events' => $userClients], 200);
     }
 }
