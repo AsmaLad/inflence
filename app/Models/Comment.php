@@ -10,7 +10,7 @@ class Comment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['comment','user_id','event_uuid' ];
+    protected $fillable = ['comment','username','user_id','event_uuid' ];
 
     protected $primaryKey = 'uuid';
     public $incrementing = false;

@@ -11,16 +11,19 @@ class CommentsController extends Controller
 {
     public function index()
     {
-        // $comments = Comment::with('event')->get();
-        // $event=Event::where('uuid',$request->email)->first();
         $comments = Event::with('comments')->get();
 
-        // $responseData = $comments->map(function ($comment) {
-        //     return [
-        //         'comment' => $comment->comment,
-        //         'event_name' => $comment->event->title,
-        //     ];
-        // });
+
+
+        // $userId = Auth::id();
+
+// Retrieve the comments belonging to the authenticated user
+// $comments = Comment::whereHas('event', function ($query) use ($userId) {
+// echo($query);
+
+//     $query->where('user_id', $userId);
+// })->get();
+
 
         return response()->json(['data' => $comments]);
     }
@@ -28,16 +31,23 @@ class CommentsController extends Controller
     public function store(Request $request)
 {
     $user = Auth::user();
-    $events = $user->events[0]->uuid;
-    
+
+    $events = $user->events;
+    $mappedArray = collect($events)->map(function ($item) {
+        // Transform the object as per your requirements
+        return [
+            'event_id' => $item['uuid']
+        ];
+    });
+
         $comment = new Comment();
         $comment->comment = $request->input('comment');//comment
         $comment->user_id = $user->uuid; //user_id
-        $comment->event_uuid = $events;
+        $comment->username =$user->name; //user_id
+        $comment->event_uuid = $mappedArray[0]['event_id'];
         $comment->save();
-        // $username = $user->name;
         // return response()->json(['data' => $comment, 'username' => $username], 201);  'data' => $events,
-    return response()->json(['message' => 'Comment added successfully'], 201);
+    return response()->json(['message' => 'Comment added successfully','data' => $events,], 201);
 
 }
 

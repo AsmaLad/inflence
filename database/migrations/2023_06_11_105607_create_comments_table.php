@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('uuid')->primary();
             $table->string('comment'); 
             $table->uuid('user_id'); 
+            $table->string('username')->nullable(); 
             $table->uuid('event_uuid'); 
 
             $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');

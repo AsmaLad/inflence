@@ -4,21 +4,49 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class TaskController extends Controller
+class TasksController extends Controller
 {
     public function index()
     {
-        $tasks = Task::all();
+        $userId = Auth::id();
+        $tasks = Task::where('user_id', $userId)->get();
 
         return response()->json(['tasks' => $tasks], 200);
     }
 
     public function store(Request $request)
     {
-        $task = Task::create($request->all());
+        $user = Auth::user();
+        $events = $user->events;
 
+
+        if ($user->role === 'admin' || $user->role === 'contributeur') {
+
+            $mappedArray = collect($events)->map(function ($item) {
+                // Transform the object as per your requirements
+                return [
+                    'event_id' => $item['uuid']
+                ];
+            });
+
+            // $task = Task::create($request->all());
+            $task = new Task();
+
+            $task->name = $request->input('name');
+            // $task->progress = $request->input('progress');
+            $task->status = $request->input('status');
+            $task->user_id = $user->uuid; //user_id
+            $task->event_uuid = $mappedArray[0]['event_id'];
+
+            $task->save();
+
+        }
+        // return response()->json(['message' => 'Only admin and contributeurs can add tasks events'], 403);
         return response()->json(['task' => $task], 201);
+
     }
 
     public function show($id)
