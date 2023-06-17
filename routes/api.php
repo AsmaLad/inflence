@@ -67,10 +67,8 @@ Route::middleware('auth:api')->group(function () {
 
     //FEEDBACK
     Route::get('/feedbacks', [FeedbackController::class, 'index']);
-    Route::get('/feedbacks/create', [FeedbackController::class, 'create']);
     Route::post('/feedbacks', [FeedbackController::class, 'store']);
     Route::get('/feedbacks/{id}', [FeedbackController::class, 'show']);
-    Route::get('/feedbacks/{id}/edit', [FeedbackController::class, 'edit']);
     Route::put('/feedbacks/{id}', [FeedbackController::class, 'update']);
     Route::delete('/feedbacks/{id}', [FeedbackController::class, 'destroy']);
 });
