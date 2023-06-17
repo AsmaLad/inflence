@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('feedbacks', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
-            $table->string('feedback'); 
+            $table->string('corps'); 
             $table->uuid('user_id'); 
             $table->string('username')->nullable(); 
             $table->uuid('event_uuid'); 
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('feedbacks');
+        Schema::dropIfExists('feedback');
     }
 };

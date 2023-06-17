@@ -8,7 +8,7 @@ use App\Http\Controllers\EventsController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\TasksController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\FeedbacksController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,9 +66,10 @@ Route::middleware('auth:api')->group(function () {
     Route::get('all-users', [UserController::class, 'getAllUsers']);
 
     //FEEDBACK
-    Route::get('/feedbacks', [FeedbackController::class, 'index']);
-    Route::post('/feedbacks', [FeedbackController::class, 'store']);
-    Route::get('/feedbacks/{id}', [FeedbackController::class, 'show']);
-    Route::put('/feedbacks/{id}', [FeedbackController::class, 'update']);
-    Route::delete('/feedbacks/{id}', [FeedbackController::class, 'destroy']);
+    Route::get('feedbacks', [FeedbacksController::class, 'index']);
+    Route::post('feedback', [FeedbacksController::class, 'store']);
+    Route::get('feedbacks/{id}', [FeedbacksController::class, 'show']);
+    Route::put('feedbacks/{id}', [FeedbacksController::class, 'update']);
+    Route::delete('feedbacks/{id}', [FeedbacksController::class, 'destroy']);
+    Route::get('feedbacks-user', [FeedbacksController::class,'getFeedbackUser']);
 });

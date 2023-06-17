@@ -10,7 +10,7 @@ class Feedback extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['feedback','username','user_id','event_uuid' ];
+    protected $fillable = ['corps','username','user_id','event_uuid' ];
 
     protected $primaryKey = 'uuid';
     public $incrementing = false;
@@ -28,4 +28,10 @@ class Feedback extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
+    }
+
 }
