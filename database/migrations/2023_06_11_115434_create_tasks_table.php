@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->string('name');
             $table->string('progress')->default('0');
             $table->enum('status', ['en cours','terminer'])->default('en cours');
-            $table->uuid('user_id');
-            $table->uuid('event_uuid');
+            $table->uuid('user_id')->nullable();
+            $table->uuid('event_uuid')->nullable();
 
             $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');
             $table->foreign('event_uuid')->references('uuid')->on('events')->onDelete('cascade');
