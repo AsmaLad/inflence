@@ -62,9 +62,13 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function events()
+    public function eventsContributeur()
+    {
+        return $this->hasMany(Event::class, 'contributeur_id', 'uuid');
+    }
+
+    public function eventsClient()
     {
         return $this->hasMany(Event::class, 'user_id', 'uuid');
     }
-
 }

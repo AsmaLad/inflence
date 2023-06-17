@@ -17,11 +17,11 @@ class CommentsController extends Controller
 
         // $userId = Auth::id();
 
-// Retrieve the comments belonging to the authenticated user
+        // Retrieve the comments belonging to the authenticated user
 // $comments = Comment::whereHas('event', function ($query) use ($userId) {
 // echo($query);
 
-//     $query->where('user_id', $userId);
+        //     $query->where('user_id', $userId);
 // })->get();
 
 
@@ -29,27 +29,30 @@ class CommentsController extends Controller
     }
 
     public function store(Request $request)
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
+        if ($user->role === 'client') {
+            $events = $user->eventsClient;
+        } elseif ($user->role === 'contributeur') {
+            $events = $user->eventsContributeur;
+        }
 
-    $events = $user->events;
-    $mappedArray = collect($events)->map(function ($item) {
-        // Transform the object as per your requirements
-        return [
-            'event_id' => $item['uuid']
-        ];
-    });
+        $mappedArray = collect($events)->map(function ($item) {
+            // Transform the object as per your requirements
+            return [
+                'event_id' => $item['uuid']
+            ];
+        });
 
         $comment = new Comment();
-        $comment->comment = $request->input('comment');//comment
+        $comment->comment = $request->input('comment'); //comment
         $comment->user_id = $user->uuid; //user_id
-        $comment->username =$user->name; //user_id
+        $comment->username = $user->name; //user_id
         $comment->event_uuid = $mappedArray[0]['event_id'];
         $comment->save();
-        // return response()->json(['data' => $comment, 'username' => $username], 201);  'data' => $events,
-    return response()->json(['message' => 'Comment added successfully','data' => $events,], 201);
+        return response()->json(['message' => 'Comment added successfully', 'data' => $comment,], 201);
 
-}
+    }
 
     public function show($id)
     {
