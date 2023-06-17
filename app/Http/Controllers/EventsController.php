@@ -54,27 +54,24 @@ class EventsController extends Controller
 
     public function getEventsWithUsers()
     {
-        // $events = Event::all();
-        $events = Event::select('title', 'status', 'progress')->get();
-        $contributeurIds = Event::pluck('contributeur_id')->all();
-        $clientIds = Event::pluck('user_id')->all();
-        
-        $userContributeurs = User::whereIn('uuid', $contributeurIds)->get();
-        $userClients = User::whereIn('uuid', $clientIds)->get();
-        
-        $data = $events->map(function ($event) use ($userContributeurs, $userClients) {
-            $userNameContributeur = $userContributeurs->where('contributeur_id', $event->contributeur_id)->pluck('name')->first();
-            $userNameClient = $userClients->where('user_id', $event->user_id)->pluck('name')->first();
-        
-            return [
-                'event' => $event,
-                'userNameClient' => $userNameClient,
-                'userNameContributeur' => $userNameContributeur,
-            ];
+        $events = Event::select('title', 'status', 'progress', 'uuid','contributeur_id','user_id')->get();
+        $arr = [];
 
-        });
-        return response()->json(['events' => $data], 200);
-        
-        // return response()->json(['events' => $userClients], 200);
+        if (is_array($arr) || is_countable($arr)) {
+        foreach($events as $event) {
+            $obj = new \stdClass();
+            $contributeurId = $event->contributeur_id;
+            $clientId = $event->user_id;
+            $userContributeurs = User::findOrFail ($contributeurId); //contributeur_id
+            $userClients = User::find($clientId); //client_id
+            $obj->event_data = $event;
+            $obj->client = $userClients;
+            $obj->contributeur = $userContributeurs;
+            array_push($arr, $obj);
+        }
+
+
     }
+        return response()->json(['data' => $arr], 200);
+        }
 }
