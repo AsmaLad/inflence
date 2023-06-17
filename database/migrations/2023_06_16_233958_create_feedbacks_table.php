@@ -14,7 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('feedbacks', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('uuid')->primary();
+            $table->string('feedback'); 
+            $table->uuid('user_id'); 
+            $table->string('username')->nullable(); 
+            $table->uuid('event_uuid'); 
+
+            $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');
+            $table->foreign('event_uuid')->references('uuid')->on('events')->onDelete('cascade');
             $table->timestamps();
         });
     }
