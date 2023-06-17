@@ -62,18 +62,19 @@ class EventsController extends Controller
             foreach ($events as $event) {
                 $obj = new \stdClass();
                 $taskObj = new \stdClass();
+                $taskObj->tasks = [];
                 $contributeurId = $event->contributeur_id;
-                $clientId = $event->user_id;
 
+                $clientId = $event->user_id;
                 $eventUuid =$event->uuid; 
 
                 $allTasks= Task::all();
                 foreach ($allTasks as $task) {
-                    $taskObj->tasks = [];
 
                     if ($task->event_uuid == $eventUuid)
                     {
                         $taskObj->tasks[]=$task;
+                        // array_push($taskObj->tasks, $task);
                     }
                 }
 
@@ -86,6 +87,7 @@ class EventsController extends Controller
                 array_push($arr, $obj);
 
             }
+
         }
         return response()->json(['data' => $arr], 200);
     }
