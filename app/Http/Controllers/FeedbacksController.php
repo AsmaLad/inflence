@@ -71,9 +71,14 @@ class FeedbacksController extends Controller
 
     public function getFeedbackUser()
     {
-        $userId = Auth::id();
-        $feedbacks = Feedback::where('user_id', $userId)->get();
+        $user = Auth::user();
 
-        return response()->json(['feedbacks' => $feedbacks], 201);
+        $feedbacks = Event::with('feedbacks')->get();
+
+        $filteredFeedbacks = $feedbacks->filter(function ($feedback) use ($user) {
+            return $feedback->user_id == $user->uuid;
+        });
+
+        return response()->json(['feedbacks' => $filteredFeedbacks], 201);
     }
 }
